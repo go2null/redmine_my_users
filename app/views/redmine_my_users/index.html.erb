@@ -1,0 +1,46 @@
+<h2><%=l(:label_my_users)%></h2>
+
+<%= form_tag(my_users_path, :method => :get) do %>
+	<!-- Total user count is displayed, not sponsored users -->
+<fieldset><legend><%= l(:label_filter_plural) %></legend>
+	<label for='status'><%= l(:field_status) %>:</label>
+	<%= select_tag 'status', users_status_options_for_select(@status), :class => "small", :onchange => "this.form.submit(); return false;"  %>
+
+	<!-- TODO: group list is resetting to current filtered users -->
+	<% if @groups.present? %>
+		<label for='group_id'><%= l(:label_group) %>:</label>
+	<%= select_tag 'group_id', content_tag('option') + options_from_collection_for_select(@groups, :id, :name, params[:group_id].to_i), :onchange => "this.form.submit(); return false;"  %>
+<% end %>
+		<label for='name'><%= l(:label_user) %>:</label>
+			<%= text_field_tag 'name', params[:name], :size => 30 %>
+			<%= submit_tag l(:button_apply), :class => "small", :name => nil %>
+			<%= link_to l(:button_clear), my_users_path, :class => 'icon icon-reload' %>
+</fieldset>
+<% end %>
+&nbsp;
+
+
+<div class="autoscroll">
+	<table class="list">
+		<thead><tr>
+				<%= sort_header_tag('login', :caption => l(:label_user)) %>
+				<%= sort_header_tag('mail', :caption => l(:field_mail)) %>
+				<%= sort_header_tag('last_login_on', :caption => l(:field_last_login_on), :default_order => 'desc') %>
+				<th><%= l(:label_group_plural) %></th>
+		</tr></thead>
+		<tbody>
+		<% for user in @users -%>
+			<tr class="<%= user.css_classes %> <%= cycle("odd", "even") %>">
+			<td class="username"><%= avatar(user, :size => "14") %><%= link_to h(user.name), edit_user_path(user) %></td>
+			<td class="email"><%= mail_to(h(user.mail)) %></td>
+			<td class="last_login_on"><%= format_time(user.last_login_on) unless user.last_login_on.nil? %></td>
+			<td class="username"><%= user.groups.map(&:to_s).sort.join(', ') %></td>
+		</tr>
+	<% end -%>
+		</tbody>
+	</table>
+</div>
+<p class="pagination"><%= pagination_links_full @user_pages, @user_count %></p>
+
+<% html_title(l(:label_my_users)) -%>
+

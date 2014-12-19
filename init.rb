@@ -1,10 +1,17 @@
-require 'redmine'
-require 'sponsor_view_application_hooks'
+# This is the important line.
+# It requires the file in lib/my_plugin/hooks.rb
+require_dependency 'redmine_my_users/hooks'
 
-Redmine::Plugin.register :sponsor_view do
-  name 'Sponsor View plugin'
-  author 'Monica K'
-  description 'A plugin that will add to "My Account" page for sponsor users.'
-  version '0.0.1'
-  url 'https://***/my/account'
+Redmine::Plugin.register :redmine_my_users do
+  name 'My Users plugin'
+  description 'View users that you are sponsoring (is responsible for).'
+  url 'https://github.com/go2null/redmine_my_users'
+
+	author 'go2null'
+	author_url 'https://github.com/go2null'
+
+  version '0.1.0'
+	requires_redmine :version_or_higher => '2.6.0'
 end
+
+User.send :include, UserPatch
