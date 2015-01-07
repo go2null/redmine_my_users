@@ -30,7 +30,7 @@
 		<tbody>
 		<% for user in @users -%>
 			<tr class="<%= user.css_classes %> <%= cycle("odd", "even") %>">
-			<td class="username"><%= avatar(user, :size => "14") %><%= link_to h(user.name), edit_user_path(user) %></td>
+			<td class="username"><%= avatar(user, :size => "14") %><%= link_to h(user.name), user_path(user) %></td>
 			<td class="email"><%= mail_to(h(user.mail)) %></td>
 			<td class="last_login_on"><%= format_time(user.last_login_on) unless user.last_login_on.nil? %></td>
 			<td class="username"><%= user.groups.map(&:to_s).sort.join(', ') %></td>

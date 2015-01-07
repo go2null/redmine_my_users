@@ -10,7 +10,7 @@ Redmine::Plugin.register :redmine_my_users do
 	author 'go2null'
 	author_url 'https://github.com/go2null'
 
-  version '0.1.1'
+  version '0.1.2'
 	requires_redmine :version_or_higher => '2.6.0'
 end
 
