@@ -4,7 +4,7 @@ module UserPatch
 		base.send(:include, InstanceMethods)
 
 		# Wrap the methods we are extending
-		base.alias_method_chain :validate, :wrapping
+		#base.alias_method_chain :validate, :wrapping
 
 		# Exectue this code at the class level (not instance level)
 		base.class_eval do
