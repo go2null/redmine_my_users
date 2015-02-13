@@ -14,7 +14,9 @@ module UserPatch
 			belongs_to :parent, class_name: 'User'
 
 			validates_presence_of :parent
-		end #base.class_eval
+
+      safe_attributes 'parent_id'
+		end
 
 	end
 
@@ -23,4 +25,4 @@ module UserPatch
 
 end
 
-
+User.send :include, UserPatch

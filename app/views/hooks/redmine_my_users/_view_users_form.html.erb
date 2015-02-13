@@ -1,4 +1,4 @@
 <p>
-<%= form.label :user_parent %>:
-<%= form.text_field :parent_id, :required => true %>
+    <%= users_select(form, :parent_id, User.all,
+                     :required => true, :label => "Sponsor")%>
 </p>

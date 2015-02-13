@@ -24,6 +24,15 @@ module UsersHelperPatch
 												 ["#{l(:status_locked)} (#{user_count_by_status[3].to_i})", '3']], selected.to_s)
 		end
 
+    def users_select(form, id_field, users, opts={})
+      form.select(id_field,
+                  users.sort_by {|u| [u.lastname, u.firstname]}
+                       .map{|u| ["#{u.lastname}, #{u.firstname} --- (#{u.mail})", u.id]},
+                  opts)
+    end
+
 	end
 
 end
+
+UsersHelper.send :include, UsersHelperPatch
