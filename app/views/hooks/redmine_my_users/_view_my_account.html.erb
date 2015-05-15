@@ -1,4 +1,1 @@
-<p>
-<%= form.label :user_parent %>:
-<%= link_to h(User.find(@user.parent_id).name) if @user.parent_id && @user.parent_id > 0 %>
-</p>
+<p><%= form.label :user_parent %>: <%= link_to_user(@user.parent) %></p>
