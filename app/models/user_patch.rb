@@ -1,5 +1,4 @@
 module UserPatch
-
 	def self.included(base)
 		base.send(:include, InstanceMethods)
 
@@ -15,14 +14,26 @@ module UserPatch
 
 			validates_presence_of :parent
 
-      safe_attributes 'parent_id'
+			safe_attributes 'parent_id'
 		end
-
 	end
 
 	module InstanceMethods
+		# TODO: properly implement as Tree
+		# 'descendants' is from 'acts_as_tree'
+		#
+		# Returns list of descendants.
+		#
+		#   root.descendants # => [child1, subchild1, subchild2]
+		def descendants(depth=nil)
+			depth ||= 0
+			result = children.dup
+			unless depth == 1
+				result += children.collect {|child| child.descendants(depth-1)}.flatten
+			end
+			result
+		end
 	end
-
 end
 
 User.send :include, UserPatch
