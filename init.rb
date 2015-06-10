@@ -10,8 +10,8 @@ Redmine::Plugin.register :redmine_my_users do
 	author 'go2null'
 	author_url 'https://github.com/go2null'
 
-	version '0.1.3'
-	requires_redmine :version_or_higher => '2.6.0'
+	version '0.1.4'
+	requires_redmine :version_or_higher => '2.0.0'
 end
 
 
@@ -34,8 +34,8 @@ def load_patches(path = nil)
 	end
 	directory ||= File.dirname(__FILE__)
 	dir_paths = ["app/models/**", "app/helpers"]
-	dir_paths.each do |path|
-		Dir.glob(File.join(directory, path, '*.rb')).each do |file|
+	dir_paths.each do |dir_path|
+		Dir.glob(File.join(directory, dir_path, '*.rb')).each do |file|
 			load file
 		end
 	end
